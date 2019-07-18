@@ -107,6 +107,8 @@ function FiberRootNode(containerInfo, tag, hydrate) {
   this.hydrate = hydrate;
   this.firstBatch = null;
   this.callbackNode = null;
+  // CROWN:
+  // 各种time标记各种优先级的
   this.callbackExpirationTime = NoWork;
   this.firstPendingTime = NoWork;
   this.lastPendingTime = NoWork;

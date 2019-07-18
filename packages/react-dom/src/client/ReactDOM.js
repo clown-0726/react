@@ -531,10 +531,14 @@ function legacyCreateRootFromDOMContainer(
     }
   }
 
+  // CROWN:
+  // 最终返回 new React Root
   // Legacy roots are not batched.
   return new ReactSyncRoot(container, LegacyRoot, shouldHydrate);
 }
 
+// CROWN:
+//
 function legacyRenderSubtreeIntoContainer(
   parentComponent: ?React$Component<any, any>,
   children: ReactNodeList,
@@ -553,6 +557,8 @@ function legacyRenderSubtreeIntoContainer(
   let fiberRoot;
   if (!root) {
     // Initial mount
+    // CROWN:
+    // 这里创建一个react root节点 Fiber Root
     root = container._reactRootContainer = legacyCreateRootFromDOMContainer(
       container,
       forceHydrate,
@@ -566,6 +572,8 @@ function legacyRenderSubtreeIntoContainer(
       };
     }
     // Initial mount should not be batched.
+    // CROWN:
+    // 最终在这里做了一个批量的更新操作
     unbatchedUpdates(() => {
       updateContainer(children, fiberRoot, parentComponent, callback);
     });
@@ -656,6 +664,9 @@ const ReactDOM: Object = {
     );
   },
 
+  // CROWN:
+  // ReactDOM.render(<APP>, Document.getElementById('root'))
+  // 这是定义的入口
   render(
     element: React$Element<any>,
     container: DOMContainer,
@@ -674,6 +685,8 @@ const ReactDOM: Object = {
         enableStableConcurrentModeAPIs ? 'createRoot' : 'unstable_createRoot',
       );
     }
+    // CROWN:
+    // 直接调用了这个方法
     return legacyRenderSubtreeIntoContainer(
       null,
       element,

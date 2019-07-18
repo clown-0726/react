@@ -149,6 +149,8 @@ function scheduleRootUpdate(
     }
   }
 
+  // CROWN:
+  // 创建一个update
   const update = createUpdate(expirationTime, suspenseConfig);
   // Caution: React DevTools currently depends on this property
   // being called "element".
@@ -169,6 +171,9 @@ function scheduleRootUpdate(
     flushPassiveEffects();
   }
   enqueueUpdate(current, update);
+  // CROWN:
+  // 最终触发scheduleWork开始调度，
+  // 按照优先级进行调度
   scheduleWork(current, expirationTime);
 
   return expirationTime;
@@ -294,6 +299,8 @@ function findHostInstanceWithWarning(
   return findHostInstance(component);
 }
 
+// CROWN:
+// 这个方法返回的是一个Fiber Root
 export function createContainer(
   containerInfo: Container,
   tag: RootTag,
@@ -302,6 +309,7 @@ export function createContainer(
   return createFiberRoot(containerInfo, tag, hydrate);
 }
 
+// CROWN:
 export function updateContainer(
   element: ReactNodeList,
   container: OpaqueRoot,
